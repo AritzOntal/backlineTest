@@ -1,0 +1,27 @@
+{
+  "name": "backline-frontend",
+  "version": "1.0.0",
+  "type": "module",
+  "source": [
+    "src/index.html",
+    "src/rentals.html",
+    "src/modify.html",
+    "src/modifyRentals.html"
+  ],
+  "scripts": {
+    "start": "parcel --no-cache",
+    "build": "parcel build"
+  },
+  "keywords": [],
+  "author": "Aritz Ontalvilla",
+  "license": "ISC",
+  "description": "frontend for ontalbackline",
+  "devDependencies": {
+    "buffer": "^6.0.3",
+    "parcel": "latest",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "axios": "^1.7.7"
+  }
+}

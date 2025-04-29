@@ -1,0 +1,26 @@
+{
+  "name": "backline-backend",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AritzOntal/ontalbackline.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AritzOntal/ontalbackline/issues"
+  },
+  "homepage": "https://github.com/AritzOntal/ontalbackline#readme",
+  "description": "backend of ontalbackline",
+
+  "dependencies": {
+    "express": "4.21.2",
+    "sqlite3": "5.1.1",
+    "knex": "3.1.0",
+    "cors": "2.8.5"
+  }
+}

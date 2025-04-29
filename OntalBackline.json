@@ -1,0 +1,213 @@
+{
+  "v": 6,
+  "name": "OntalBackline",
+  "folders": [],
+  "requests": [
+    {
+      "v": "11",
+      "name": "Guitars",
+      "method": "GET",
+      "endpoint": "http://localhost:8080/guitars",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"title\": \"Cub de la lucha\",\n  \"description\": \"Club de la lucha movie\",\n  \"year\": 2001\n}"
+      },
+      "requestVariables": [],
+      "responses": {}
+    },
+    {
+      "v": "11",
+      "name": "Guitars/guitarId",
+      "method": "GET",
+      "endpoint": "http://localhost:8080/guitars/1",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"title\": \"Cub de la lucha\",\n  \"description\": \"Club de la lucha movie\",\n  \"year\": 2001\n}"
+      },
+      "requestVariables": [],
+      "responses": {}
+    },
+    {
+      "v": "11",
+      "name": "Guitars",
+      "method": "POST",
+      "endpoint": "http://localhost:8080/guitars",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"model\": \"Fender\",\n  \"year\": \"1970\",\n  \"condition\": \"Very Good\"\n}"
+      },
+      "requestVariables": [],
+      "responses": {}
+    },
+    {
+      "v": "11",
+      "name": "Guitars/guitarId",
+      "method": "DELETE",
+      "endpoint": "http://localhost:8080/guitars/2",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"model\": \"Fender\",\n  \"year\": \"1970\",\n  \"condition\": \"Very Good\"\n}"
+      },
+      "requestVariables": [],
+      "responses": {}
+    },
+    {
+      "v": "11",
+      "name": "Guitars/guitarId",
+      "method": "PUT",
+      "endpoint": "http://localhost:8080/guitars/5",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"model\": \"Fender\",\n  \"year\": \"1963\",\n  \"condition\": \"Bad\"\n}"
+      },
+      "requestVariables": [],
+      "responses": {}
+    },
+    {
+      "v": "11",
+      "name": "Rentals/",
+      "method": "GET",
+      "endpoint": "http://localhost:8080/rentals",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"title\": \"Cub de la lucha\",\n  \"description\": \"Club de la lucha movie\",\n  \"year\": 2001\n}"
+      },
+      "requestVariables": [],
+      "responses": {}
+    },
+    {
+      "v": "11",
+      "name": "Rentals/rentalId",
+      "method": "GET",
+      "endpoint": "http://localhost:8080/rentals/7",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"title\": \"Cub de la lucha\",\n  \"description\": \"Club de la lucha movie\",\n  \"year\": 2001\n}"
+      },
+      "requestVariables": [],
+      "responses": {}
+    },
+    {
+      "v": "11",
+      "name": "Rentals",
+      "method": "POST",
+      "endpoint": "http://localhost:8080/rentals",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \t\t\"id_client\": 7,\n        \"id_guitar\": 5,\n        \"date\": \"20-01-2024\",\n        \"return_date\": \"27-01-2024\"\n}"
+      },
+      "requestVariables": [],
+      "responses": {}
+    },
+    {
+      "v": "11",
+      "name": "Rentals/rentalId",
+      "method": "DELETE",
+      "endpoint": "http://localhost:8080/rentals/2",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \"model\": \"Fender\",\n  \"year\": \"1970\",\n  \"condition\": \"Very Good\"\n}"
+      },
+      "requestVariables": [],
+      "responses": {}
+    },
+    {
+      "v": "11",
+      "name": "Rentals/rentalId",
+      "method": "PUT",
+      "endpoint": "http://localhost:8080/rentals/7",
+      "params": [],
+      "headers": [],
+      "preRequestScript": "",
+      "testScript": "",
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "body": {
+        "contentType": "application/json",
+        "body": "{\n  \t\t\"id_client\": \"2\" ,\n        \"id_guitar\": \"1\" ,\n        \"date\": \"modificado\",\n        \"return_date\": \"supermodificado\"\n}"
+      },
+      "requestVariables": [],
+      "responses": {}
+    }
+  ],
+  "auth": {
+    "authActive": true,
+    "authType": "none"
+  },
+  "headers": [],
+  "_ref_id": "coll_m6rq6dbc_d311dadf-6920-41aa-a63a-57ce4fb915c2"
+}
