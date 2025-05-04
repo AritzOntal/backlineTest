@@ -1,71 +1,18 @@
 const express = require('express');
 const cors = require('cors');
-const knex = require('knex');
 
-const db = knex({
-    client: 'sqlite3',
-    connection: {
-        filename: 'backline.db'
-    },
-    useNullAsDefault: true
-});
+// IMPORTAMOS LAS FUNCIONES DE UTILS
+const { getAge, getRentalDuration, getCategory } = require('./utils');
 
-//ACTIVAR FOREIGN KEYS DE SQILTE
-
-db.raw('PRAGMA foreign_keys = ON')
-    .then(() => {
-        console.log('Claves foráneas activadas en SQLite');
-    })
-    .catch(err => {
-        console.error('Error activando claves foráneas:', err);
-    });
-
-module.exports = db;
+const guitars = require('./route/guitars')
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use('/', guitars)
+
 //CRUD GUITARRAS
-
-app.get('/guitars', async (req, res) => {
-    const result = await db('guitars').select('*');
-    res.status(200).json(result);
-})
-
-app.get('/guitars/:guitarId', async (req, res) => {
-    try {
-        const result = await db('guitars').where({ id_guitar: req.params.guitarId }).first();
-
-        if (!result) {
-            return res.status(404).json({ error: 'La guitarra no existe' });
-        }
-
-        res.status(200).json(result);
-
-    } catch (error) {
-        console.error('❌ Error al buscar la guitarra:', error.message);
-        res.status(500).json({ error: 'Error interno del servidor' });
-    }
-});
-
-app.post('/guitars', async (req, res) => {
-    try {
-        await db('guitars').insert({
-            model: req.body.model,
-            year: req.body.year,
-            condition: req.body.condition
-        });
-        return res.status(201).json({ message: 'Guitarra registrada con éxito' });
-    } catch (error) {
-        console.error('❌ Error al registrar la guitarra:', error.message);
-
-        if (error.message.includes('FOREIGN KEY constraint failed')) {
-            return res.status(400).json({ error: 'La guitarra ya existe o hay un problema con la clave foránea' });
-        }
-        return res.status(500).json({ error: 'Error interno del servidor' });
-    }
-});
 
 app.delete('/guitars/:guitarId', async (req, res) => {
 
@@ -85,7 +32,22 @@ app.put('/guitars/:guitarId', async (req, res) => {
     res.status(204).send();
 })
 
-//CRUD ALQUILERES
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////CRUD ALQUILERES
 
 app.get('/rentals', async (req, res) => {
     const result = await db('guitar_rentals').select('*');
@@ -168,4 +130,6 @@ app.put('/rentals/:rentalId', async (req, res) => {
 
 app.listen(8080, () => {
     console.log('backend iniciado en el puerto 8080')
-})
+});
+
+module.exports = { app };
