@@ -2,8 +2,11 @@
   "name": "backline-backend",
   "version": "1.0.0",
   "scripts": {
-    "start": "node src/app.js",
-    "test": "jest src/test/unit && mocha src/test/integration --exit"
+    "unit-test": "jest src/test/unit",
+    "integration-test": "mocha backend/src/test/integration --exit",
+    "start": "node backend/src/app.js --config config.local.yaml",
+    "test": "npm run unit-test && npm run integration-test",
+    "start-dev": "node backend/src/app.js --config config.local.yaml"
   },
   "repository": {
     "type": "git",
@@ -19,9 +22,11 @@
   "description": "backend of ontalbackline",
   "dependencies": {
     "express": "4.21.2",
-    "sqlite3": "5.1.1",
+    "mysql": "^2.18.1",
     "knex": "3.1.0",
-    "cors": "2.8.5"
+    "cors": "2.8.5",
+    "js-yaml": "^4.1.0",
+    "yargs": "17.7.2"
   },
   "devDependencies": {
     "chai": "^4.4.1",
