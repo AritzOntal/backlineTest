@@ -3,6 +3,8 @@ const cors = require('cors');
 
 // IMPORTAMOS LAS FUNCIONES DE UTILS
 const { getAge, getRentalDuration, getCategory } = require('./utils');
+const { config } = require('./config/configuration');
+
 
 const guitars = require('./route/guitars')
 
@@ -128,8 +130,8 @@ app.put('/rentals/:rentalId', async (req, res) => {
 });
 
 
-app.listen(8080, () => {
-    console.log('backend iniciado en el puerto 8080')
+app.listen(config.service.port, () => {
+    console.log('backend iniciado en el puerto ' + config.service.port);
 });
 
 module.exports = { app };

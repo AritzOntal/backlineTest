@@ -1,24 +1,18 @@
 const knex = require('knex');
 const { getAge, getCategory } = require('../utils')
-
+const { config } = require('../config/configuration');
 
 const db = knex({
-    client: 'sqlite3',
+    client: 'mysql',
     connection: {
-        filename: 'backline.db'
+        host: config.db.host,
+        password: config.db.password,
+        port: config.db.port,
+        user: config.db.user,
+        database: config.db.database
     },
     useNullAsDefault: true
 });
-
-//ACTIVAR FOREIGN KEYS DE SQILTE
-
-db.raw('PRAGMA foreign_keys = ON')
-    .then(() => {
-        console.log('Claves foráneas activadas en SQLite');
-    })
-    .catch(err => {
-        console.error('Error activando claves foráneas:', err);
-    });
 
 module.exports = db;
 
@@ -37,13 +31,14 @@ const registerGuitar = (async (model, year, condition) => {
     const age = getAge(year);
     const category = getCategory(age);
 
-    const returning = await db('guitars').insert({
+    const returning = await db('guitars')
+    .returning("id").insert({
         model: model,
         year: year,
         condition: condition,
         age: age,
         category: category
-    }).returning('id_guitar');
+    });
 
     //TODO AÑADIR DATOS AL RETURNING
     const result = {
