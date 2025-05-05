@@ -6,4 +6,4 @@ db:
   database: backline
 
 service:
-  port: 80
+  port: 8080
