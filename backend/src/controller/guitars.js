@@ -1,4 +1,9 @@
-const { findGuitar, registerGuitar, findGuitars, returning, } = require("../service/guitars");
+const { findGuitar, registerGuitar, findGuitars, returning, modifyGuitar, } = require("../service/guitars");
+
+
+
+
+
 
 const getGuitars = (async (req, res) => {
     const guitarList = await findGuitars();
@@ -10,6 +15,11 @@ const getGuitars = (async (req, res) => {
     // });
     res.status(200).json(guitarList);
 });
+
+
+
+
+
 
 const getGuitar = (async (req, res) => {
 
@@ -40,6 +50,10 @@ const getGuitar = (async (req, res) => {
         res.status(500).json({ error: 'Error interno del servidor' });
     }
 });
+
+
+
+
 
 
 const postGuitar = (async (req, res) => {
@@ -80,19 +94,88 @@ const postGuitar = (async (req, res) => {
         }
         return res.status(500).json({ error: 'Error interno del servidor' });
     }
-
 });
+
+
+
+
+
+
 
 const putGuitar = (async (req, res) => {
-    modifyGuitar(req.body.model, req.body.year, req.body.condition);
 
+    const model = req.body.model;
+    const year = req.body.year;
+    const condition = req.body.condition;
+    const id = req.params.guitarId;
+
+    if (!Number.isInteger(id)) {
+        return res.status(400).json({
+            status: 'bad request',
+            message: 'Invalid or missing guitar ID'
+        });
+    }
+
+    console.log('Updating guitar with ID:', id);
+
+    if (!model || !year || !condition) {
+        return res.status(400).json({
+            status: 'bad request',
+            message: 'all fields are required'
+        })
+    }
+
+    if (typeof model !== 'string' || typeof condition !== 'string' || !Number.isInteger(year)) {
+        return res.status(400).json({
+            status: 'bad request',
+            message: 'Some type of data is not correct'
+        });
+    }
+
+    const updateGuitar = await modifyGuitar(id, model, year, condition);
+
+    if (!updateGuitar) {
+        return res.status(404).json({
+            status: 'not found',
+            message: 'Guitar not found or could not be updated'
+        });
+    }
+
+    res.status(200).json(updateGuitar);
 });
+
+
+
+
+
+
 
 const deleteGuitar = (async (req, res) => {
-    //TODO validaciones y comprobaciones
-    const guitar = deleteGuitar(id);
+    const guitarId = parseInt(req.params.guitarId);
 
+    if (!Number.isInteger(guitarId)) {
+        return res.status(400).json({
+            status: 'bad request',
+            message: 'guitarId is not a valid number'
+        });
+    }
+    //TODO validaciones y comprobaciones
+    const removed = await removeGuitar(guitarId);
+
+    if (!removed) {
+        return res.status(404).json({
+            status: 'not found',
+            message: 'guitar not found'
+        })
+    }
+
+    res.status(204).json({});
 });
+
+
+
+
+
 
 module.exports = {
     getGuitar,
