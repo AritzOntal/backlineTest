@@ -28,5 +28,5 @@ jobs:
         cache: 'npm'
     - run: npm install
     - run: docker compose -f docker-compose.dev.yaml up -d
-    - run: sleep 4
+    - run: sleep 3
     - run: npm test
