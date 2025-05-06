@@ -9,11 +9,11 @@ chai.use(chaiHttp);
 chai.should();
 
 
-describe('guitars', () => {
-    describe('GET/guitars', () => {
-        it('should get all guitarras', (done) => {
+describe('rentals', () => {
+    describe('GET/rentals', () => {
+        it('should get all rentals', (done) => {
             chai.request(app)
-                .get('/guitars')
+                .get('/rentals')
                 .end((error, response) => {
                     response.should.have.status(200);
                     response.body.should.be.a('array');
