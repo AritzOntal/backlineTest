@@ -45,8 +45,7 @@ const registerGuitar = (async (model, year, condition) => {
     const age = getAge(year);
     const category = getCategory(age);
 
-    const returning = await db('guitars')
-    .returning("id").insert({
+    const returning = await db('guitars').insert({
         model: model,
         year: year,
         condition: condition,
@@ -55,7 +54,7 @@ const registerGuitar = (async (model, year, condition) => {
     });
 
     const result = {
-        id: returning[0].id_guitar,
+        id: returning[0],
         age: age,
         category: category
     }
