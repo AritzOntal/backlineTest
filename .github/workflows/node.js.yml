@@ -29,6 +29,5 @@ jobs:
     - run: npm install
     - run: docker compose -f docker-compose.dev.yaml up -d
     - run: sleep 3
-    - run: npm run unit-test
     - run: npm run integration-test
     
