@@ -70,3 +70,35 @@ describe('POST/rentals', () => {
     });
 });
 
+describe('PUT/rentals', () => {
+    it('should update a rental', (done) => {
+        chai.request(app)
+            .put('/rentals/1')
+            .send({
+                id_guitar: 1,
+                return_date: '2025-10-10'
+            })
+            .end((error, response) => {
+                response.should.have.status(200);
+                expect(response.body).to.have.property('id_guitar_rental');
+                expect(response.body).to.have.property('id_guitar');
+                expect(response.body).to.have.property('return_date').to.equal('2025-10-10');
+
+                done();
+            }); 
+    });
+
+    it('no deberia actualizar si no hay fecha de vuelta', (done) => {
+        chai.request(app)
+            .put('/rentals/1')
+            .send({
+                id_guitar: 1,
+            })
+            .end((error, response) => {
+                response.should.have.status(400);
+
+                done();
+            }); 
+    });
+});
+

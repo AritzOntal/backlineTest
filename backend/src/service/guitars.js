@@ -56,21 +56,21 @@ const registerGuitar = (async (model, year, condition) => {
 });
 
 
-
-
 const modifyGuitar = (async (id, model, year, condition) => {
-    await db('guitars').where({ id_guitar: id }).update({
+    const updated = await db('guitars').where({ id_guitar: id }).update({
         model: model,
         year: year,
         condition: condition
     });
 
+    if (updated === 0) return null;
+    
     const result = {
-        model: model,
-        year: year,
-        condition: condition
+        id,
+        model,
+        year,
+        condition
     }
-
     return result;
 });
 

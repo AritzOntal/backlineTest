@@ -91,9 +91,9 @@ const postGuitar = (async (req, res) => {
 const putGuitar = (async (req, res) => {
 
     const model = req.body.model;
-    const year = req.body.year;
+    const year = parseInt(req.body.year, 10);
     const condition = req.body.condition;
-    const id = req.params.guitarId;
+    const id = parseInt(req.params.guitarId, 10);
 
     if (!Number.isInteger(id)) {
         return res.status(400).json({
@@ -109,6 +109,7 @@ const putGuitar = (async (req, res) => {
             message: 'all fields are required'
         })
     }
+    
 
     if (typeof model !== 'string' || typeof condition !== 'string' || !Number.isInteger(year)) {
         return res.status(400).json({

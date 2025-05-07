@@ -50,18 +50,31 @@ const registerRental = (async (id_guitar, name, return_date) => {
     
 });
 
-const modifyRental = (async (idRental, idGuitar, returnDate) => {
-    const returning = await db('rentals').where({ id_guitar_rental: idRental }).update({
-        id_guitar: idGuitar,
-        return_date: returnDate
-    });
 
-    const result = {
-        idRental: returning[0],
-    }
+
+const modifyRental = async (idRental, idGuitar, returnDate) => {
+    const updated = await db('rentals')
+        .where({ id_guitar_rental: idRental })
+        .update({
+            id_guitar: idGuitar,
+            return_date: returnDate
+        });
+
+    if (updated === 0) return null; // no se actualizó nada
+
+    const result = await db('rentals')
+        .select(
+            'id_guitar_rental',
+            'id_guitar',
+            'name',
+            db.raw('DATE_FORMAT(date, "%Y-%m-%d") as date'),
+            db.raw('DATE_FORMAT(return_date, "%Y-%m-%d") as return_date')
+        )
+        .where({ id_guitar_rental: idRental })
+        .first();
 
     return result;
-});
+};
 
 // TODO REMOVE RENTAL
 

@@ -85,5 +85,42 @@ describe('POST/guitars', () => {
                 done();
             });
     });
+    
 });
 
+
+
+describe('PUT/guitars', () => {
+    it('should update a guitar', (done) => {
+        chai.request(app)
+            .put('/guitars/1')
+            .send({
+                model: "guitarModelUpdate",
+                condition: "guitarConditionUpdate",
+                year: 2020
+            })
+            .end((error, response) => {
+                response.should.have.status(200);
+                expect(response.body).to.have.property('model');
+                expect(response.body).to.have.property('year').to.equal(2020);
+                expect(response.body).to.have.property('condition');
+
+                done();
+            }); 
+    });
+
+
+    it('No deberia actualizar si no especifica año', (done) => {
+        chai.request(app)
+            .put('/guitars/1')
+            .send({
+                model: "guitarModelUpdate",
+                condition: "guitarConditionUpdate"
+            })
+            .end((error, response) => {
+                response.should.have.status(400);
+
+                done();
+            }); 
+    });
+});
