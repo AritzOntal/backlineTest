@@ -2,6 +2,8 @@ const knex = require('knex');
 const { getAge, getCategory } = require('../utils')
 const { config } = require('../config/configuration');
 
+
+
 const db = knex({
     client: 'mysql',
     connection: {
@@ -16,23 +18,28 @@ const db = knex({
 
 module.exports = db;
 
+
+
 const findGuitar = (async (idGuitar) => {
     const result = await db('guitars').where({ id_guitar: idGuitar }).first();
     return result;
 });
+
+
 
 const findGuitars = (async () => {
     const result = await db('guitars').select('*');
     return result;
 });
 
+
+
 const registerGuitar = (async (model, year, condition) => {
 
     const age = getAge(year);
     const category = getCategory(age);
 
-    const returning = await db('guitars')
-    .returning("id").insert({
+    const returning = await db('guitars').insert({
         model: model,
         year: year,
         condition: condition,
@@ -40,9 +47,8 @@ const registerGuitar = (async (model, year, condition) => {
         category: category
     });
 
-    //TODO AÑADIR DATOS AL RETURNING
     const result = {
-        id: returning[0].id_guitar,
+        id: returning[0],
         age: age,
         category: category
     }
@@ -51,13 +57,37 @@ const registerGuitar = (async (model, year, condition) => {
 
 
 
-const modifyGuitar = (async (model, year, condition) => {
 
+const modifyGuitar = (async (id, model, year, condition) => {
+    await db('guitars').where({ id_guitar: id }).update({
+        model: model,
+        year: year,
+        condition: condition
+    });
+
+    const result = {
+        model: model,
+        year: year,
+        condition: condition
+    }
+
+    return result;
 });
+
+
+
+
+
+
 
 const removeGuitar = (async (idGuitar) => {
 
 });
+
+
+
+
+
 
 module.exports = {
     findGuitar,

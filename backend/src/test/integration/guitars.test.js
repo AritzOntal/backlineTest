@@ -20,6 +20,9 @@ describe('guitars', () => {
                     expect(response.body[0]).to.have.property('model');
                     expect(response.body[0]).to.have.property('year');
                     expect(response.body[0]).to.have.property('condition');
+                    expect(response.body[0]).to.have.property('age');
+                    expect(response.body[0]).to.have.property('category');
+                    
                     expect(response.body[0].model).to.equal('Gibson Les Paul')
                     expect(response.body[1].model).to.equal('Fender Stratocaster')
                     done();

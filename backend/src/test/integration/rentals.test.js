@@ -1,0 +1,72 @@
+const chai = require('chai');
+const expect = chai.expect;
+const chaiHttp = require('chai-http');
+const { response } = require('express');
+
+const app = require('../../app').app;
+
+chai.use(chaiHttp);
+chai.should();
+
+
+describe('rentals', () => {
+    describe('GET/rentals', () => {
+        it('should get all rentals', (done) => {
+            chai.request(app)
+                .get('/rentals')
+                .end((error, response) => {
+                    response.should.have.status(200);
+                    response.body.should.be.a('array');
+                    expect(response.body[0]).to.have.property('id_guitar_rental');
+                    expect(response.body[0]).to.have.property('id_guitar');
+                    expect(response.body[0]).to.have.property('name');
+                    expect(response.body[0]).to.have.property('date');
+                    expect(response.body[0]).to.have.property('return_date');
+                    
+                    expect(response.body[0].name).to.equal('Aritz Ontalvilla')
+                    expect(response.body[1].name).to.equal('Ander Sevilla')
+
+                    done();
+                });
+        });
+    });
+});
+
+
+describe('POST/rentals', () => {
+    it('should register a new rental with correct id_guitar', (done) => {
+        chai.request(app)
+            .post('/rentals')
+            .send({
+                id_guitar: 1,
+                name: "rentalName",
+                return_date: '2025-09-12'
+            })
+            .end((error, response) => {
+                response.should.have.status(201);
+
+                expect(response.body).to.have.property('id_guitar').to.equal(1);
+                expect(response.body).to.have.property('id');
+                expect(response.body).to.have.property('name');
+
+                done();
+            }); 
+    });
+
+
+    it('validation sholud fail beacouse name is mandatory', (done) => {
+        chai.request(app)
+            .post('/rentals')
+            .send({
+                id_guitar: 1,
+            })
+            .end((error, response) => {
+                response.should.have.status(400);
+                expect(response.body.status).to.equal('bad-request');
+                expect(response.body.message).to.equal('el campo name es obligatorio');
+
+                done();
+            });
+    });
+});
+

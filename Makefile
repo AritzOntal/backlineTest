@@ -8,4 +8,4 @@ all-test: stop-dev-env start-dev-env
 	sleep 4
 	npm test
 
-.PHONY: all-test start-dev-env stop-dev-env
+.PHONY: all-test start-dev-env stop-dev-envmake 

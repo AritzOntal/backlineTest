@@ -1,5 +1,5 @@
 version: "3.4"
-name: backlineTest
+name: backlinetest
 
 services: 
   db:
