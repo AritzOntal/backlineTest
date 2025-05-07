@@ -1,7 +1,4 @@
-const { findGuitar, registerGuitar, findGuitars, returning, modifyGuitar, } = require("../service/guitars");
-
-
-
+const { findGuitars, registerGuitar, findGuitar, modifyGuitar, } = require("../service/guitars");
 
 
 
@@ -15,9 +12,6 @@ const getGuitars = (async (req, res) => {
     // });
     res.status(200).json(guitarList);
 });
-
-
-
 
 
 
@@ -50,9 +44,6 @@ const getGuitar = (async (req, res) => {
         res.status(500).json({ error: 'Error interno del servidor' });
     }
 });
-
-
-
 
 
 
@@ -97,11 +88,6 @@ const postGuitar = (async (req, res) => {
 });
 
 
-
-
-
-
-
 const putGuitar = (async (req, res) => {
 
     const model = req.body.model;
@@ -116,7 +102,6 @@ const putGuitar = (async (req, res) => {
         });
     }
 
-    console.log('Updating guitar with ID:', id);
 
     if (!model || !year || !condition) {
         return res.status(400).json({
@@ -147,9 +132,6 @@ const putGuitar = (async (req, res) => {
 
 
 
-
-
-
 const deleteGuitar = (async (req, res) => {
     const guitarId = parseInt(req.params.guitarId);
 
@@ -171,10 +153,6 @@ const deleteGuitar = (async (req, res) => {
 
     res.status(204).json({});
 });
-
-
-
-
 
 
 module.exports = {

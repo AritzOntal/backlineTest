@@ -1,18 +1,25 @@
 const express = require('express');
 const cors = require('cors');
 
-// IMPORTAMOS LAS FUNCIONES DE UTILS
-const { getAge, getRentalDuration, getCategory } = require('./utils');
 const { config } = require('./config/configuration');
 
-
-const guitars = require('./route/guitars')
-
 const app = express();
+
+//GUARDAMOS LAS LLAMADAS CREARDAS EN "ROUTE"
+const guitars = require('./route/guitars')
+const rentals = require('./route/rentals')
+
+//USAMOS LAS LLAMADS CON USE DE EXPRESS
+app.use('/', guitars)
+app.use('/', rentals)
+
 app.use(cors());
 app.use(express.json());
 
-app.use('/', guitars)
+//ESCUCHARÁ EN EL PUERTO DE LA CONFIG
+app.listen(config.service.port, () => {
+    console.log('backend iniciado en el puerto ' + config.service.port);
+});
 
 //CRUD GUITARRAS
 
@@ -24,37 +31,16 @@ app.delete('/guitars/:guitarId', async (req, res) => {
     res.status(204).send()
 });
 
-app.put('/guitars/:guitarId', async (req, res) => {
-    await db('guitars').where({ id_guitar: req.params.guitarId }).update({
-        model: req.body.model,
-        year: req.body.year,
-        condition: req.body.condition
-    });
-
-    res.status(204).send();
-})
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
 
 /////////////////CRUD ALQUILERES
 
-app.get('/rentals', async (req, res) => {
-    const result = await db('guitar_rentals').select('*');
-    res.status(200).json(result);
-})
+// app.get('/rentals', async (req, res) => {
+//     const result = await db('guitar_rentals').select('*');
+//     res.status(200).json(result);
+// })
 
 app.get('/rentals/:rentalId', async (req, res) => {
     try {
@@ -129,9 +115,5 @@ app.put('/rentals/:rentalId', async (req, res) => {
     }
 });
 
-
-app.listen(config.service.port, () => {
-    console.log('backend iniciado en el puerto ' + config.service.port);
-});
 
 module.exports = { app };

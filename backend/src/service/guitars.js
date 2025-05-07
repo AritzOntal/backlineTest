@@ -20,7 +20,6 @@ module.exports = db;
 
 
 
-
 const findGuitar = (async (idGuitar) => {
     const result = await db('guitars').where({ id_guitar: idGuitar }).first();
     return result;
@@ -28,15 +27,10 @@ const findGuitar = (async (idGuitar) => {
 
 
 
-
-
 const findGuitars = (async () => {
     const result = await db('guitars').select('*');
     return result;
 });
-
-
-
 
 
 
@@ -60,8 +54,6 @@ const registerGuitar = (async (model, year, condition) => {
     }
     return result;
 });
-
-
 
 
 
