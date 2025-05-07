@@ -22,7 +22,7 @@ describe('rentals', () => {
                     expect(response.body[0]).to.have.property('name');
                     expect(response.body[0]).to.have.property('date');
                     expect(response.body[0]).to.have.property('return_date');
-                    
+
                     expect(response.body[0].name).to.equal('Aritz Ontalvilla')
                     expect(response.body[1].name).to.equal('Ander Sevilla')
 
@@ -69,7 +69,7 @@ describe('POST/rentals', () => {
                 expect(response.body).to.have.property('name');
 
                 done();
-            }); 
+            });
     });
 
 
@@ -104,7 +104,7 @@ describe('PUT/rentals', () => {
                 expect(response.body).to.have.property('return_date').to.equal('2025-10-10');
 
                 done();
-            }); 
+            });
     });
 
     it('no deberia actualizar si no hay fecha de vuelta', (done) => {
@@ -117,7 +117,7 @@ describe('PUT/rentals', () => {
                 response.should.have.status(400);
 
                 done();
-            }); 
+            });
     });
 });
 
@@ -129,7 +129,7 @@ describe('DELETE/rentals', () => {
                 res.should.have.status(200);
                 res.body.should.have.property('message').that.includes('deleted successfully');
                 done();
-            }); 
+            });
     });
 
     it('Devolverá 404 sin el alquiler no existe', (done) => {
@@ -139,7 +139,7 @@ describe('DELETE/rentals', () => {
                 res.should.have.status(404);
                 res.body.should.have.property('message').that.includes('not found');
                 done();
-            }); 
+            });
     });
 });
 
