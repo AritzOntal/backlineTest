@@ -64,7 +64,7 @@ const modifyGuitar = (async (id, model, year, condition) => {
     });
 
     if (updated === 0) return null;
-    
+
     const result = {
         id,
         model,
@@ -75,17 +75,12 @@ const modifyGuitar = (async (id, model, year, condition) => {
 });
 
 
-
-
-
-
-
 const removeGuitar = (async (idGuitar) => {
 
+    const deleted = await db('guitars').where({ id_guitar: idGuitar }).del();
+
+    return deleted;
 });
-
-
-
 
 
 
@@ -94,5 +89,5 @@ module.exports = {
     findGuitars,
     registerGuitar,
     modifyGuitar,
-    removeGuitar
+    removeGuitar,
 }

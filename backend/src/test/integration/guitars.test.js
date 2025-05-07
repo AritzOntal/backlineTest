@@ -22,9 +22,25 @@ describe('guitars', () => {
                     expect(response.body[0]).to.have.property('condition');
                     expect(response.body[0]).to.have.property('age');
                     expect(response.body[0]).to.have.property('category');
-                    
+
                     expect(response.body[0].model).to.equal('Gibson Les Paul')
                     expect(response.body[1].model).to.equal('Fender Stratocaster')
+                    done();
+                });
+        });
+    });
+    describe('GET/guitars/1', () => {
+        it('should get unique guitar', (done) => {
+            chai.request(app)
+                .get('/guitars/1')
+                .end((error, response) => {
+                    response.should.have.status(200);
+                    expect(response.body).to.have.property('model', 'Gibson Les Paul');
+                    expect(response.body).to.have.property('year');
+                    expect(response.body).to.have.property('condition');
+                    expect(response.body).to.have.property('age');
+                    expect(response.body).to.have.property('category');
+
                     done();
                 });
         });
@@ -50,7 +66,7 @@ describe('POST/guitars', () => {
                 expect(response.body).to.have.property('category');
 
                 done();
-            }); 
+            });
     });
 
     it('validation sholud fail beacouse name is mandatory', (done) => {
@@ -85,7 +101,7 @@ describe('POST/guitars', () => {
                 done();
             });
     });
-    
+
 });
 
 
@@ -106,7 +122,7 @@ describe('PUT/guitars', () => {
                 expect(response.body).to.have.property('condition');
 
                 done();
-            }); 
+            });
     });
 
 
@@ -121,6 +137,30 @@ describe('PUT/guitars', () => {
                 response.should.have.status(400);
 
                 done();
-            }); 
+            });
     });
 });
+
+
+
+
+describe('DELETE/guitars/1', () => {
+    it('No elimina la guitarra porque tiene alquileres activos', (done) => {
+        chai.request(app)
+            .delete('/guitars/1')
+            .end((err, res) => {
+                res.should.have.status(409);
+                done();
+            });
+    });
+
+    it('La guitarra se eliminó correctamente', (done) => {
+        chai.request(app)
+            .delete('/guitars/4')
+            .end((err, res) => {
+                res.should.have.status(204);
+                done();
+            });
+    });
+});
+

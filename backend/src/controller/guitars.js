@@ -1,5 +1,5 @@
 const { findGuitars, registerGuitar, findGuitar, modifyGuitar, removeGuitar } = require("../service/guitars");
-
+const { activeRentals } = require("../service/rentals");
 
 
 const getGuitars = (async (req, res) => {
@@ -109,7 +109,7 @@ const putGuitar = (async (req, res) => {
             message: 'all fields are required'
         })
     }
-    
+
 
     if (typeof model !== 'string' || typeof condition !== 'string' || !Number.isInteger(year)) {
         return res.status(400).json({
@@ -132,27 +132,47 @@ const putGuitar = (async (req, res) => {
 
 
 
-
 const deleteGuitar = (async (req, res) => {
-    const guitarId = parseInt(req.params.guitarId);
+    try {
 
-    if (!Number.isInteger(guitarId)) {
-        return res.status(400).json({
-            status: 'bad request',
-            message: 'guitarId is not a valid number'
+        const guitarId = parseInt(req.params.guitarId);
+
+        if (!Number.isInteger(guitarId)) {
+            return res.status(400).json({
+                status: 'bad request',
+                message: 'guitarId is not a valid number'
+            });
+        }
+    
+        const active = await activeRentals(guitarId);
+
+        if (active > 0) {
+
+            return res.status(409).json({
+                status: 'conflict',
+                message: 'Cannot delete guitar: it is currently used in rentals.'
+            });
+        }
+
+        const removed = await removeGuitar(guitarId);
+
+        if (!removed) {
+            return res.status(404).json({
+                status: 'not found',
+                message: 'guitar not found'
+            })
+        }
+
+        return res.status(204).end();
+
+    } catch (error) {
+        console.error('Error in deleteGuitar:', error);
+        return res.status(500).json({
+            status: 'error',
+            message: 'Internal server error'
         });
-    }
-    //TODO validaciones y comprobaciones
-    const removed = await removeGuitar(guitarId);
 
-    if (!removed) {
-        return res.status(404).json({
-            status: 'not found',
-            message: 'guitar not found'
-        })
     }
-
-    res.status(204).json({});
 });
 
 

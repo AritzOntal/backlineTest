@@ -13,7 +13,7 @@ const db = knex({
         user: config.db.user,
         database: config.db.database
     },
-    useNullAsDefault: true
+    useNullAsDefault: true  
 });
 
 module.exports = db;
@@ -30,10 +30,20 @@ const findRentals = (async () => {
     return result;
 });
 
-const findRental = (async (idRental) => {
-    const result = await db('rentals').where({ _rental: idRental }).first();
-    return result;
-});
+
+const findRental = async (idRental) => {
+    return await db('rentals')
+        .where({ id_guitar_rental: idRental })
+        .select(
+            'id_guitar_rental',
+            'id_guitar',
+            'name',
+            db.raw('DATE_FORMAT(date, "%Y-%m-%d") AS date'),
+            db.raw('DATE_FORMAT(return_date, "%Y-%m-%d") AS return_date')
+        )
+        .first();
+};
+
 
 const registerRental = (async (id_guitar, name, return_date) => {
     const returning = await db('rentals').insert({
@@ -46,7 +56,7 @@ const registerRental = (async (id_guitar, name, return_date) => {
         .where({ id_guitar_rental: returning[0] })
         .first();
         
-    return result
+    return result;
     
 });
 
@@ -76,7 +86,20 @@ const modifyRental = async (idRental, idGuitar, returnDate) => {
     return result;
 };
 
-// TODO REMOVE RENTAL
+const activeRentals = (async (guitarId) => {
+    const result = await db('rentals').where({ id_guitar: guitarId }).count('id_guitar_rental as count');
+    
+    return Number(result[0].count);
+});
+
+
+const removeRental = (async (idRental) => {
+
+    const deleted = await db('rentals').where({ id_guitar_rental: idRental }).del();
+
+    return deleted;
+});
+
 
 
 module.exports = {
@@ -84,4 +107,6 @@ module.exports = {
     findRentals,
     registerRental,
     modifyRental,
+    activeRentals,
+    removeRental
 }

@@ -1,4 +1,4 @@
-const { findRentals, registerRental, findRental, modifyRental } = require("../service/rentals");
+const { findRentals, registerRental, findRental, modifyRental, removeRental } = require("../service/rentals");
 
 
 
@@ -109,18 +109,24 @@ const putRental = (async (req, res) => {
 });
 
 
-// const deleteRental = (async(req, res) => {
+const deleteRental = (async(req, res) => {
 
-//     const idRental = req.params.idRental
-//     const delRental = removeRental(idRental);
+    const idRental = req.params.rentalId;
+    const delRental = await removeRental(idRental);
 
-//     if (!delRental) {
-//         return res.status(404).json({
-//             status: 'not found',
-//             message: 'Rental not found or could not be deleted'
-//         });
-//     }
-// })
+
+    if (!delRental) {
+        return res.status(404).json({
+            status: 'not found',
+            message: 'Rental not found or could not be deleted'
+        });
+    }
+
+    return res.status(200).json({
+        status: 'success',
+        message: `Rental with ID ${idRental} deleted successfully`
+    });
+});
 
 
 
@@ -128,5 +134,6 @@ module.exports = {
     getRental,
     getRentals,
     postRental,
-    putRental
+    putRental,
+    deleteRental
 }

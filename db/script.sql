@@ -27,6 +27,7 @@ INSERT INTO guitars (model, year, `condition`) VALUES
     ('Fender Stratocaster', 1963, 'Bad'),
     ('Danelectro', 1992, 'Good');
 
+
 INSERT INTO rentals (id_guitar, name, return_date) VALUES 
     ('1', 'Aritz Ontalvilla', '2025-05-17'),
     ('2', 'Ander Sevilla', '2025-05-27'),
