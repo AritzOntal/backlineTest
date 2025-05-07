@@ -1,4 +1,4 @@
-const { findGuitars, registerGuitar, findGuitar, modifyGuitar, } = require("../service/guitars");
+const { findGuitars, registerGuitar, findGuitar, modifyGuitar, removeGuitar } = require("../service/guitars");
 
 
 

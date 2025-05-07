@@ -19,9 +19,14 @@ const db = knex({
 module.exports = db;
 
 
-
 const findRentals = (async () => {
-    const result = await db('rentals').select('*');
+    const result = await db('rentals').select(
+        'id_guitar_rental',
+        'id_guitar',
+        'name',
+        db.raw('DATE_FORMAT(date, "%Y-%m-%d") AS date'),
+        db.raw('DATE_FORMAT(return_date, "%Y-%m-%d") AS return_date')
+    );
     return result;
 });
 
@@ -37,11 +42,12 @@ const registerRental = (async (id_guitar, name, return_date) => {
         return_date: return_date
     });
 
-    const result = {
-        id: returning[0]
-    }
-    return result;
-
+    const result = await db ('rentals')
+        .where({ id_guitar_rental: returning[0] })
+        .first();
+        
+    return result
+    
 });
 
 const modifyRental = (async (idRental, idGuitar, returnDate) => {
@@ -57,11 +63,12 @@ const modifyRental = (async (idRental, idGuitar, returnDate) => {
     return result;
 });
 
+// TODO REMOVE RENTAL
+
 
 module.exports = {
     findRental,
     findRentals,
     registerRental,
     modifyRental,
-    removeRental
 }

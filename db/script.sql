@@ -15,10 +15,11 @@ CREATE TABLE guitars (
 
 CREATE TABLE rentals (
     id_guitar_rental INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    id_guitar INT UNSIGNED(50),
+    id_guitar INT UNSIGNED,
     name VARCHAR(50),
     date DATE DEFAULT CURRENT_DATE,
-    return_date DATE
+    return_date DATE,
+    FOREIGN KEY (id_guitar) REFERENCES guitars(id_guitar)
 );
 
 INSERT INTO guitars (model, year, `condition`) VALUES 
@@ -27,8 +28,8 @@ INSERT INTO guitars (model, year, `condition`) VALUES
     ('Danelectro', 1992, 'Good');
 
 INSERT INTO rentals (id_guitar, name, return_date) VALUES 
-    ('1', 'Aritz Ontalvilla', '17-05-2025'),
-    ('2', 'Ander Sevilla', '27-05-2025'),
-    ('3', 'Alex Harillo', '30-05-2025');
+    ('1', 'Aritz Ontalvilla', '2025-05-17'),
+    ('2', 'Ander Sevilla', '2025-05-27'),
+    ('3', 'Alex Harillo', '2025-05-30');
 
 

@@ -7,6 +7,6 @@ router.get('/rentals', getRentals);
 router.get('/rentals/:rentalId', getRental);
 router.post('/rentals', postRental);
 router.put('/rentals/:rentalId', putRental);
-router.delete('/rentals/:rentalId', deleteRental);
+// router.delete('/rentals/:rentalId', deleteRental);
 
 module.exports = router;

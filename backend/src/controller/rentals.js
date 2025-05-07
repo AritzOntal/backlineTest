@@ -1,4 +1,4 @@
-const { findRentals, registerRental, findRental, modifyRental, } = require("../service/guitars");
+const { findRentals, registerRental, findRental, modifyRental } = require("../service/rentals");
 
 
 
@@ -51,10 +51,10 @@ const postRental = (async (req, res) => {
 
     try {
 
-        const result = await registerRental(req.params.rentalId, req.body.name, req.body.return_date);
+        const result = await registerRental(req.body.id_guitar, req.body.name, req.body.return_date, req.params.rentalId);
         return res.status(201).json({
 
-            id: result.id,
+            id: result.id_guitar_rental,
             id_guitar: result.id_guitar,
             name: result.name,
             date: result.date,
@@ -109,12 +109,24 @@ const putRental = (async (req, res) => {
 });
 
 
+// const deleteRental = (async(req, res) => {
+
+//     const idRental = req.params.idRental
+//     const delRental = removeRental(idRental);
+
+//     if (!delRental) {
+//         return res.status(404).json({
+//             status: 'not found',
+//             message: 'Rental not found or could not be deleted'
+//         });
+//     }
+// })
+
 
 
 module.exports = {
     getRental,
     getRentals,
     postRental,
-    putRental,
-    deleteRental
+    putRental
 }
