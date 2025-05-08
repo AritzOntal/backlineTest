@@ -21,17 +21,18 @@
   "homepage": "https://github.com/AritzOntal/ontalbackline#readme",
   "description": "backend of ontalbackline",
   "dependencies": {
-    "express": "4.21.2",
-    "mysql": "^2.18.1",
-    "knex": "3.1.0",
     "cors": "2.8.5",
+    "express": "4.21.2",
     "js-yaml": "^4.1.0",
+    "knex": "3.1.0",
+    "mysql": "^2.18.1",
     "yargs": "17.7.2"
   },
   "devDependencies": {
     "chai": "^4.4.1",
     "chai-http": "4.4.0",
+    "jest": "^29.7.0",
     "mocha": "10.4.0",
-    "jest": "^29.7.0"
+    "sinon": "^20.0.0"
   }
 }

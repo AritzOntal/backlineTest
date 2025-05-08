@@ -101,7 +101,6 @@ const removeRental = (async (idRental) => {
 });
 
 
-
 module.exports = {
     findRental,
     findRentals,

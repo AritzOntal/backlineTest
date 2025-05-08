@@ -1,6 +1,6 @@
 const { findGuitars, registerGuitar, findGuitar, modifyGuitar, removeGuitar, countDistinct } = require("../service/guitars");
 const { activeRentals } = require("../service/rentals");
-const { guitarValidationData, noNewGuitar } = require("../guitarValidator");
+const { guitarValidationData, isNewGuitar } = require("../utils");
 
 
 const getGuitars = (async (req, res) => {
@@ -62,10 +62,12 @@ const postGuitar = (async (req, res) => {
         })
     }
 
-    if (noNewGuitar(condition)){
+    const newGuitar = isNewGuitar(condition);
+
+    if (newGuitar !== false) {
         return res.status(400).json({
             status: 'bad-request',
-            message: 'la guitarra no puede ser nueva'
+            message: newGuitar
         })
     }
 

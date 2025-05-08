@@ -1,10 +1,10 @@
 const expect = require('chai').expect;
-const{ noNewGuitar, guitarValidationData }  = require('../../guitarValidator');
+const{ isNewGuitar, guitarValidationData }  = require('../../utils');
 
-describe('guitarValidator', () => {
+describe('utils', () => {
     it('la guitarra no es nueva', () => {
-        let noNew = noNewGuitar('new');
-        expect(noNew).equal(true);
+        let noNew = isNewGuitar('new');
+        expect(noNew).equal('la guitarra no puede ser nueva');
     });
 
     it('los campos no son correctos', () => {
@@ -17,5 +17,7 @@ describe('guitarValidator', () => {
         expect(valid).to.equal(true);
     });
 });
+
+
 
 
