@@ -49,6 +49,9 @@ const registerGuitar = (async (model, year, condition) => {
 
     const result = {
         id: returning[0],
+        model: model,
+        year: year,
+        condition: condition,
         age: age,
         category: category
     }

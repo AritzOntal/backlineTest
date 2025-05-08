@@ -73,13 +73,13 @@ const postGuitar = (async (req, res) => {
 
     try {
         //LLAMANDO AL SERVICE
-        const result = await registerGuitar(req.body.model, req.body.year, req.body.condition);
+        const result = await registerGuitar(model, year, condition);
         return res.status(201).json({
             //DEVUELVE TODA LA INFO DE LA GUITARRA INSERTADA CON SU ID.
             id_guitar: result.id,
-            model: req.body.model,
-            year: req.body.year,
-            condition: req.body.condition,
+            model: result.model,
+            year: result.year,
+            condition: result.condition,
             age: result.age,
             category: result.category
         });
