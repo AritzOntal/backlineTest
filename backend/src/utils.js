@@ -14,15 +14,19 @@ function getCategory(age) {
 function guitarValidationData(model, year, condition) {
     if (!model) return 'el campo modelo es obligatorio';
     if (!condition) return 'el campo condition es obligatorio';
-    if (!year || typeof year !== 'number') return 'el campo year es obligatorio o incorrecto';
-    return true;
+
+    const parsedYear = Number(year);
+    if (!year || isNaN(parsedYear)) {
+        return 'el campo year es obligatorio o incorrecto';
+    }
+        return true;
 }
 
 function isNewGuitar(condition) {
-    if (typeof condition === 'string' && condition.toLowerCase() === 'new') return 'la guitarra no puede ser nueva';
-    
+    if (typeof condition === 'string' && condition.toLowerCase() === 'new') {
+        return 'la guitarra no puede ser nueva';
+    }
     return false;
-    
 }
 
 

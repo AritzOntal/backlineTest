@@ -61,7 +61,7 @@ const postRental = (async (req, res) => {
         const result = await registerRental(req.body.id_guitar, req.body.name, req.body.return_date, req.params.rentalId);
         return res.status(201).json({
 
-            id: result.id_guitar_rental,
+            id_rental: result.id_guitar_rental,
             id_guitar: result.id_guitar,
             name: result.name,
             date: result.date,
@@ -83,7 +83,7 @@ const putRental = (async (req, res) => {
 
     const idGuitar = req.body.id_guitar;
     const return_date = req.body.return_date;
-    const idRental = req.params.rentalId
+    const idRental = req.params.rentalId;
 
     const isValidDate = (date) => {
         return !isNaN(Date.parse(date));
@@ -133,6 +133,7 @@ const deleteRental = (async (req, res) => {
         status: 'success',
         message: `Rental with ID ${idRental} deleted successfully`
     });
+
 });
 
 

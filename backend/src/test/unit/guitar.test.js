@@ -8,7 +8,7 @@ describe('utils', () => {
     });
 
     it('los campos no son correctos', () => {
-        let valid = guitarValidationData(1, '1678', "good");
+        let valid = guitarValidationData('Gibson', 'texto', "good");
         expect(valid).to.equal('el campo year es obligatorio o incorrecto');
     });
 
