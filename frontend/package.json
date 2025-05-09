@@ -9,8 +9,8 @@
     "src/modifyRentals.html"
   ],
   "scripts": {
-    "start": "parcel --no-cache",
-    "build": "parcel build"
+    "start": "parcel src/index.html --no-cache",
+    "build": "parcel build src/index.html"
   },
   "keywords": [],
   "author": "Aritz Ontalvilla",
