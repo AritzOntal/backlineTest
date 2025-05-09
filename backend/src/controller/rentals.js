@@ -1,4 +1,5 @@
 const { findRentals, registerRental, findRental, modifyRental, removeRental } = require("../service/rentals");
+const { rentalValidationData, getRentalDuration } = require("../utilsRentals");
 
 
 
@@ -24,12 +25,15 @@ const getRental = (async (req, res) => {
             return;
         }
 
+        const rentalDuration = getRentalDuration(rental.date)
+
         res.status(200).json({
             id_guitar_rental: rental.id_guitar_rental,
             id_guitar: rental.id_guitar,
             name: rental.name,
             date: rental.date,
-            return_date: rental.return_date
+            return_date: rental.return_date,
+            duration: rentalDuration
         });
 
     } catch (error) {
@@ -41,12 +45,15 @@ const getRental = (async (req, res) => {
 
 const postRental = (async (req, res) => {
 
-    if (req.body.name === undefined || req.body.name === '') {
-        res.status(400).json({
+    const name = req.body.name;
+
+    const validationRental = rentalValidationData(name)
+
+    if (validationRental !== true) {
+        return res.status(400).json({
             status: 'bad-request',
-            message: 'el campo name es obligatorio'
-        });
-        return;
+            message: validationRental
+        })
     }
 
     try {
@@ -54,7 +61,7 @@ const postRental = (async (req, res) => {
         const result = await registerRental(req.body.id_guitar, req.body.name, req.body.return_date, req.params.rentalId);
         return res.status(201).json({
 
-            id: result.id_guitar_rental,
+            id_rental: result.id_guitar_rental,
             id_guitar: result.id_guitar,
             name: result.name,
             date: result.date,
@@ -76,7 +83,7 @@ const putRental = (async (req, res) => {
 
     const idGuitar = req.body.id_guitar;
     const return_date = req.body.return_date;
-    const idRental = req.params.rentalId
+    const idRental = req.params.rentalId;
 
     const isValidDate = (date) => {
         return !isNaN(Date.parse(date));
@@ -109,7 +116,7 @@ const putRental = (async (req, res) => {
 });
 
 
-const deleteRental = (async(req, res) => {
+const deleteRental = (async (req, res) => {
 
     const idRental = req.params.rentalId;
     const delRental = await removeRental(idRental);
@@ -126,6 +133,7 @@ const deleteRental = (async(req, res) => {
         status: 'success',
         message: `Rental with ID ${idRental} deleted successfully`
     });
+
 });
 
 

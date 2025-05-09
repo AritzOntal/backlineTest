@@ -65,7 +65,7 @@ describe('POST/rentals', () => {
                 response.should.have.status(201);
 
                 expect(response.body).to.have.property('id_guitar').to.equal(1);
-                expect(response.body).to.have.property('id');
+                expect(response.body).to.have.property('id_rental');
                 expect(response.body).to.have.property('name');
 
                 done();

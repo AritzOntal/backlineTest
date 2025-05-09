@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 window.showRentals = function () {
     axios.get('http://localhost:8080/rentals')
         .then(response => {

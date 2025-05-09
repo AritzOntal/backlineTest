@@ -13,7 +13,7 @@ const db = knex({
         user: config.db.user,
         database: config.db.database
     },
-    useNullAsDefault: true  
+    useNullAsDefault: true
 });
 
 module.exports = db;
@@ -52,12 +52,18 @@ const registerRental = (async (id_guitar, name, return_date) => {
         return_date: return_date
     });
 
-    const result = await db ('rentals')
+    const result = await db('rentals')
         .where({ id_guitar_rental: returning[0] })
+        .select(
+            'id_guitar_rental',
+            'id_guitar',
+            'name',
+            db.raw('DATE_FORMAT(date, "%Y-%m-%d") AS date'),
+            db.raw('DATE_FORMAT(return_date, "%Y-%m-%d") AS return_date')
+        )
         .first();
-        
+
     return result;
-    
 });
 
 
@@ -70,7 +76,7 @@ const modifyRental = async (idRental, idGuitar, returnDate) => {
             return_date: returnDate
         });
 
-    if (updated === 0) return null; // no se actualizó nada
+    if (updated === 0) return null;
 
     const result = await db('rentals')
         .select(
@@ -88,7 +94,7 @@ const modifyRental = async (idRental, idGuitar, returnDate) => {
 
 const activeRentals = (async (guitarId) => {
     const result = await db('rentals').where({ id_guitar: guitarId }).count('id_guitar_rental as count');
-    
+
     return Number(result[0].count);
 });
 
@@ -99,7 +105,6 @@ const removeRental = (async (idRental) => {
 
     return deleted;
 });
-
 
 
 module.exports = {

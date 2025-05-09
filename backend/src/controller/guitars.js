@@ -1,5 +1,6 @@
-const { findGuitars, registerGuitar, findGuitar, modifyGuitar, removeGuitar } = require("../service/guitars");
+const { findGuitars, registerGuitar, findGuitar, modifyGuitar, removeGuitar, countDistinct } = require("../service/guitars");
 const { activeRentals } = require("../service/rentals");
+const { guitarValidationData, isNewGuitar } = require("../utils");
 
 
 const getGuitars = (async (req, res) => {
@@ -46,34 +47,39 @@ const getGuitar = (async (req, res) => {
 });
 
 
-
 const postGuitar = (async (req, res) => {
-    //AÑADIR VALIDACIONES
-    if (req.body.model === undefined || req.body.model === '') {
-        res.status(400).json({
+
+    const model = req.body.model;
+    const condition = req.body.condition;
+    const year = req.body.year;
+
+    const validationError = guitarValidationData(model, year, condition);
+
+    if (validationError !== true) {
+        return res.status(400).json({
             status: 'bad-request',
-            message: 'el campo modelo es obligatorio'
-        });
-        return;
+            message: validationError
+        })
     }
-    if (req.body.condition && req.body.condition.toLowerCase() === 'new') {
-        res.status(400).json({
+
+    const newGuitar = isNewGuitar(condition);
+
+    if (newGuitar !== false) {
+        return res.status(400).json({
             status: 'bad-request',
-            message: 'la guitarra no puede ser nueva'
-        });
-        return;
+            message: newGuitar
+        })
     }
 
     try {
-
         //LLAMANDO AL SERVICE
-        const result = await registerGuitar(req.body.model, req.body.year, req.body.condition);
+        const result = await registerGuitar(model, year, condition);
         return res.status(201).json({
             //DEVUELVE TODA LA INFO DE LA GUITARRA INSERTADA CON SU ID.
             id_guitar: result.id,
-            model: req.body.model,
-            year: req.body.year,
-            condition: req.body.condition,
+            model: result.model,
+            year: result.year,
+            condition: result.condition,
             age: result.age,
             category: result.category
         });
@@ -95,27 +101,13 @@ const putGuitar = (async (req, res) => {
     const condition = req.body.condition;
     const id = parseInt(req.params.guitarId, 10);
 
-    if (!Number.isInteger(id)) {
-        return res.status(400).json({
-            status: 'bad request',
-            message: 'Invalid or missing guitar ID'
-        });
-    }
+    const validationError = guitarValidationData(model, year, condition);
 
-
-    if (!model || !year || !condition) {
+    if (validationError !== true) {
         return res.status(400).json({
-            status: 'bad request',
-            message: 'all fields are required'
+            status: 'bad-request',
+            message: validationError
         })
-    }
-
-
-    if (typeof model !== 'string' || typeof condition !== 'string' || !Number.isInteger(year)) {
-        return res.status(400).json({
-            status: 'bad request',
-            message: 'Some type of data is not correct'
-        });
     }
 
     const updateGuitar = await modifyGuitar(id, model, year, condition);
@@ -147,7 +139,6 @@ const deleteGuitar = (async (req, res) => {
         const active = await activeRentals(guitarId);
 
         if (active > 0) {
-
             return res.status(409).json({
                 status: 'conflict',
                 message: 'Cannot delete guitar: it is currently used in rentals.'
@@ -174,7 +165,6 @@ const deleteGuitar = (async (req, res) => {
 
     }
 });
-
 
 module.exports = {
     getGuitar,
